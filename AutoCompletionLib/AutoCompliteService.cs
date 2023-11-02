@@ -15,9 +15,9 @@ namespace AutoCompletionLib
             PrefTree = tree;
         }
 
-        public string[] Complite(string str)
+        public IEnumerable<string> Complite(string str)
         {
-            return new string[0]; 
+            return PrefTree.FindAllWords(str); 
         }
     }
 }

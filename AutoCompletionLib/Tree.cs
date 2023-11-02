@@ -7,18 +7,45 @@ namespace AutoCompletionLib
     {
         public AnalitycalNode Root { get; set; } = new(' ');
 
-        public void Add(string str)
+        public IEnumerable<string> FindAllWords(string str)
+        {
+            var currentNode = Root;
+            AnalitycalNode newCurNode = null!;
+            for (int i = 0; i < str.Length; i++)
+            {
+                bool haveThisChar = false;
+                for (int j = 0; j < currentNode!.Childrens.Count; j++)
+                {
+                    if (currentNode.Childrens[j].CurrentSimbol == str[i])
+                    {
+                        haveThisChar = true;
+                        newCurNode = currentNode.Childrens[j];
+                    }
+                }
+                if (!haveThisChar)
+                {
+                    return new string[0];
+                }
+                currentNode = newCurNode;
+            }
+            var keys = currentNode.WordsAndCounts.Keys.ToArray();
+            var orderKeys = keys.OrderByDescending(key => currentNode.WordsAndCounts[key]);
+            return orderKeys;
+        }
+
+
+        public void Add(string str, uint count = 0)
         {
             var currentNode = Root;
             if (!Root.WordsAndCounts.ContainsKey(str))
             {
-                Root.WordsAndCounts.Add(str, 0);
+                Root.CacheWord(str, count);
             }
             AnalitycalNode newCurNode = null;
             for (int i = 0; i < str.Length; i++)
             {
                 bool haveThisChar = false;
-                for (int j = 0; j < currentNode.Childrens.Count; j++)
+                for (int j = 0; j < currentNode!.Childrens.Count; j++)
                 {
                     if (currentNode.Childrens[j].CurrentSimbol == str[i])
                     {
@@ -26,7 +53,7 @@ namespace AutoCompletionLib
                         newCurNode = currentNode.Childrens[j];
                         if (!newCurNode.WordsAndCounts.ContainsKey(str))
                         {
-                            newCurNode.WordsAndCounts.Add(str, 0);
+                            newCurNode.CacheWord(str, count);
                         }
                     }
                 }
@@ -34,11 +61,11 @@ namespace AutoCompletionLib
                 {
                     currentNode.Childrens.Add(new(str[i]));
                     newCurNode = currentNode.Childrens.Last();
-                    newCurNode.WordsAndCounts.Add(str, 0);
+                    newCurNode.CacheWord(str, count);
                 }
                 currentNode = newCurNode;
             }
-            currentNode.Terminal = true;
+            currentNode!.Terminal = true;
         }
 
         public bool Contain(string str)

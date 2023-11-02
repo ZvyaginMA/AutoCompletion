@@ -17,5 +17,10 @@
         {
             return $"{CurrentSimbol}, is teminal: {Terminal}";
         }
+
+        public void CacheWord(string word, uint count)
+        {
+            WordsAndCounts.Add(word, count);
+        }
     }
 }
