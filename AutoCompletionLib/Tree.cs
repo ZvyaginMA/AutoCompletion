@@ -5,12 +5,12 @@ namespace AutoCompletionLib
 {
     public class Tree
     {
-        public AnalitycalNode Root { get; set; } = new(' ');
+        public NodeWithCache Root { get; set; } = new(' ');
 
         public IEnumerable<string> FindAllWords(string str)
         {
             var currentNode = Root;
-            AnalitycalNode newCurNode = null!;
+            NodeWithCache newCurNode = null!;
             for (int i = 0; i < str.Length; i++)
             {
                 bool haveThisChar = false;
@@ -41,7 +41,7 @@ namespace AutoCompletionLib
             {
                 Root.CacheWord(str, count);
             }
-            AnalitycalNode newCurNode = null;
+            NodeWithCache newCurNode = null;
             for (int i = 0; i < str.Length; i++)
             {
                 bool haveThisChar = false;
@@ -81,7 +81,7 @@ namespace AutoCompletionLib
             }
         }
 
-        public char Find(AnalitycalNode current, List<StringBuilder> listSb, List<string> list,  uint deep = 0)
+        public char Find(NodeWithCache current, List<StringBuilder> listSb, List<string> list,  uint deep = 0)
         {
             if(deep == 0)
             {

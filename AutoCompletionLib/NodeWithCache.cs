@@ -1,13 +1,13 @@
 ﻿namespace AutoCompletionLib
 {
-    public class AnalitycalNode
+    public class NodeWithCache
     {
         public char CurrentSimbol { get; set; }
         public bool Terminal { get; set; } = false;
 
-        public List<AnalitycalNode> Childrens { get; set; }
+        public List<NodeWithCache> Childrens { get; set; }
         public Dictionary<string, uint> WordsAndCounts { get; set; } = new();
-        public AnalitycalNode(char s)
+        public NodeWithCache(char s)
         {
             CurrentSimbol = s;
             Childrens = new();
