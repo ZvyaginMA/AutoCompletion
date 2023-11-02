@@ -43,31 +43,7 @@ namespace AutoCompletionLib
 
         public bool Contain(string str)
         {
-            var currentNode = Root;
-            for(int i = 0; i<str.Length; i++) 
-            {
-                bool flag = false;
-                for (int j = 0; j < currentNode.Childrens.Count; j++)
-                {
-                    if (currentNode.Childrens[j].CurrentSimbol == str[i])
-                    {
-                        flag = true;
-                        currentNode = currentNode.Childrens[j];
-                    }
-                }
-                if (!flag)
-                {
-                    return false;
-                }
-            }
-            if (currentNode.Terminal)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return Root.WordsAndCounts.ContainsKey(str);
         }
 
         public void AddStrings(IEnumerable<string> strs)

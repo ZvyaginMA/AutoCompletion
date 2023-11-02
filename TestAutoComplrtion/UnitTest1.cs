@@ -5,7 +5,7 @@ namespace TestAutoComplrtion
     public class UnitTest1
     {
         [Fact]
-        public void TestAddString()
+        public void TestAdd()
         {
             var tree = new Tree();
             
@@ -26,7 +26,7 @@ namespace TestAutoComplrtion
         }
 
         [Fact]
-        public void TestContainString()
+        public void TestContain()
         {
             var tree = new Tree();
             tree.Add("Anna");
@@ -42,9 +42,7 @@ namespace TestAutoComplrtion
         {
             var tree = new Tree();
             var service = new AutoCompliteService(tree);
-
             var result = service.Complite("An");
-
         }
     }
 }
