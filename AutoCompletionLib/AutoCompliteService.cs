@@ -8,7 +8,12 @@ namespace AutoCompletionLib
 {
     public class AutoCompliteService
     {
-        public readonly Tree? PrefTree { get; set; }
+        public Tree PrefTree { get; private set; }
+
+        public AutoCompliteService(Tree tree)
+        {
+            PrefTree = tree;
+        }
 
         public string[] Complite(string str)
         {

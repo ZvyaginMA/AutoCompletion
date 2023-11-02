@@ -1,4 +1,7 @@
-﻿namespace AutoCompletionLib
+﻿using System.Collections;
+using System.Text;
+
+namespace AutoCompletionLib
 {
     public class Tree
     {
@@ -56,6 +59,32 @@
             {
                 return false;
             }
+        }
+
+        public void AddStrings(IEnumerable<string> strs)
+        {
+            foreach(var s in strs)
+            {
+                Add(s);
+            }
+        }
+
+        public char Find(Node current, List<StringBuilder> listSb, List<string> list,  uint deep = 0)
+        {
+            if(deep == 0)
+            {
+                listSb.Add(new StringBuilder());
+            }
+            if (current.Terminal)
+            {
+                list.Add(listSb.Last().ToString());
+            }
+            if(current.Childrens.Count == 1)
+            {
+                listSb.Last().Append(current.Childrens[0]);
+                Find(current.Childrens[0], listSb, list,  deep + 1);
+            }
+            return ' ';
         }
     }
 }

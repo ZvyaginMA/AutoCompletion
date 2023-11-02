@@ -4,6 +4,7 @@
     {
         public char CurrentSimbol { get; set; }
         public bool Terminal { get; set; } = false;
+
         public List<Node> Childrens { get; set; }
 
         public Node(char s)
