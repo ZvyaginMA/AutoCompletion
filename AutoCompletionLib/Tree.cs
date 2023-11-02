@@ -5,12 +5,16 @@ namespace AutoCompletionLib
 {
     public class Tree
     {
-        public Node Root { get; set; } = new(' ');
+        public AnalitycalNode Root { get; set; } = new(' ');
 
         public void Add(string str)
         {
             var currentNode = Root;
-            Node newCurNode = null;
+            if (!Root.WordsAndCounts.ContainsKey(str))
+            {
+                Root.WordsAndCounts.Add(str, 0);
+            }
+            AnalitycalNode newCurNode = null;
             for (int i = 0; i < str.Length; i++)
             {
                 bool haveThisChar = false;
@@ -20,12 +24,17 @@ namespace AutoCompletionLib
                     {
                         haveThisChar = true;
                         newCurNode = currentNode.Childrens[j];
+                        if (!newCurNode.WordsAndCounts.ContainsKey(str))
+                        {
+                            newCurNode.WordsAndCounts.Add(str, 0);
+                        }
                     }
                 }
                 if (!haveThisChar)
                 {
                     currentNode.Childrens.Add(new(str[i]));
                     newCurNode = currentNode.Childrens.Last();
+                    newCurNode.WordsAndCounts.Add(str, 0);
                 }
                 currentNode = newCurNode;
             }
@@ -69,7 +78,7 @@ namespace AutoCompletionLib
             }
         }
 
-        public char Find(Node current, List<StringBuilder> listSb, List<string> list,  uint deep = 0)
+        public char Find(AnalitycalNode current, List<StringBuilder> listSb, List<string> list,  uint deep = 0)
         {
             if(deep == 0)
             {

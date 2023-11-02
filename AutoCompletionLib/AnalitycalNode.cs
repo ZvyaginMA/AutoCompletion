@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AutoCompletionLib
+﻿namespace AutoCompletionLib
 {
-    internal class AnalitycalNode : Node
+    public class AnalitycalNode
     {
-        public Dictionary<string, uint> WordsAndCounts = new();
+        public char CurrentSimbol { get; set; }
+        public bool Terminal { get; set; } = false;
 
-        public AnalitycalNode(char s) : base(s)
+        public List<AnalitycalNode> Childrens { get; set; }
+        public Dictionary<string, uint> WordsAndCounts { get; set; } = new();
+        public AnalitycalNode(char s)
         {
+            CurrentSimbol = s;
+            Childrens = new();
+        }
+
+        public override string ToString()
+        {
+            return $"{CurrentSimbol}, is teminal: {Terminal}";
         }
     }
 }
